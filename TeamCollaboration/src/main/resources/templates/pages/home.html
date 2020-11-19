@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+ <html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<style>
+  .str:after {
+    content:" *";
+    color: red;
+  }
+</style>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Team Collaboration</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- Font Awesome -->
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" th:href="@{/plugins/datatables-bs4/css/dataTables.bootstrap4.css}">
+  <!-- Toastr -->
+  <link rel="stylesheet" th:href="@{/plugins/toastr/toastr.min.css}">
+  <!-- Theme style -->
+  <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" th:href="@{/plugins/datepicker/bootstrap-datepicker.standalone.min.css}">
+   <!-- multiselect-->
+   <link rel="stylesheet"  type="text/css" th:href="@{/plugins/multiselect/example-styles.css}">
+      <link rel="stylesheet"  type="text/css" th:href="@{/plugins/datepicker/bootstrap-datepicker.standalone.min.css}">
+   <!-- fullCalendar -->
+  <link rel="stylesheet" th:href="@{/plugins/fullcalendar/main.min.css}">
+  <link rel="stylesheet" th:href="@{/plugins/fullcalendar-daygrid/main.min.css}">
+  <link rel="stylesheet" th:href="@{/plugins/fullcalendar-timegrid/main.min.css}">
+  <link rel="stylesheet" th:href="@{/plugins/fullcalendar-bootstrap/main.min.css}">
+ <!-- summernote -->
+  <link rel="stylesheet" th:href="@{/plugins/summernote/summernote-bs4.css}">
+  
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini layout-footer-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </li>
+       <li class="nav-item d-none d-sm-inline-block">
+       
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        
+      </li>
+    </ul>
+    <script th:inline="javascript">
+		/*<![CDATA[*/
+		var display=setInterval(function(){Time()},0);
+		function Time()
+		{
+		var slTime = new Date();
+		var time=slTime.toLocaleString();
+		document.getElementById("dyntime").innerHTML=time;
+
+		}
+		
+		/*]]>*/
+
+	</script>
+    
+    
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3">
+      <div class="input-group input-group-sm">
+     
+      
+      </div>
+    </form>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown"> <i class="far fa-calendar-alt"> &nbsp; <strong  id="dyntime" name="dyntime"></strong> </i></li>
+    
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-user-cog"></i>
+         
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header"><b>Welcome - </b> <span th:text="${role}"></span> : <span th:text="${loginUser}"></span> </span>
+          <div class="dropdown-divider"></div>
+       <!--    <a href="#" class="dropdown-item">
+            <i class="fas fa-id-card mr-2"></i> User Profile
+            <span class="float-right text-muted text-sm"></span>
+          </a> -->
+          <div class="dropdown-divider"></div>
+          <a href="/TeamCollaboration/logout" class="dropdown-item">
+            <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+            <span class="float-right text-muted text-sm"></span>
+          </a>
+          <div class="dropdown-divider"></div>
+        
+      </li>
+    
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+      <img th:src="@{/dist/img/logotm.png}"
+           alt="AdminLTE Logo"
+           class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light"><b>Team Collaboration</b></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+  
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+      
+         
+          
+          <li class="nav-header"><b>Admin Panel</b></li>
+          <li class="nav-item">
+            <a href="/TeamCollaboration/home" class="nav-link">
+              <i class="nav-icon fas fa-project-diagram"></i>
+              <p>
+                Projects
+              </p>
+            </a>
+          </li>
+         
+          <li class="nav-item has-treeview">
+            <a href="" class="nav-link">
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Tickets
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/TeamCollaboration/ChangeRequest" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Change Requests</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/TeamCollaboration/Defect" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Bug/Defects</p>
+                </a>
+              </li>
+           
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="/TeamCollaboration/meetings" class="nav-link">
+              <i class="nav-icon far fa-handshake"></i>
+              <p>
+                Meetings
+              </p>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a href="/TeamCollaboration/designation" class="nav-link">
+              <i class="nav-icon far fa-handshake"></i>
+              <p>
+                Designations
+              </p>
+            </a>
+          </li>
+          
+          
+          
+          
+       <li class="nav-item">
+            <a href="/TeamCollaboration/users" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Users
+              </p>
+            </a>
+          </li>
+            <li class="nav-item">
+            <a href="/TeamCollaboration/reports" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Reports
+              </p>
+            </a>
+          </li>
+          
+          
+            <li class="nav-item">
+            <a href="/TeamCollaboration/logout" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Log Out
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+ 
+
+
+
+  <!-- Content Wrapper. Contains page content. -->
+   <div th:with="pages=${page}" th:replace="pages/adminDashboard :: ${page}" ></div> 
+ 
+ 
+
+ 
+  
+  
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 1.0.0  
+    </div>
+    <strong>Copyright &copy; 2020 TEAM COLLABORATION SYSTEM.</strong> All rights
+    reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+ 
+
+   <!-- Add new user Modal -->
+
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-user-plus"> Add New User</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="saveuser" name="saveuser">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="fullname" class="str">Full Name</label>
+                    <input type="text" class="form-control" id="fullname" placeholder="Full Name" >
+                  </div>
+                 
+               <div class="form-group">
+                    <label for="nic" class="str">NIC</label>
+                    <input type="text" class="form-control" id="nic" placeholder="NIC" >
+                  </div>
+                 
+                       <div class="form-group">
+                    <label for="tpnumber" class="str">Telephone Number</label>
+                    <input type="text" class="form-control" id="tpnumber" placeholder="Telephone Number" name="itemConsumption" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"  />
+                  </div>
+                     <div class="form-group">
+                     <label for="userrole" class="str">User Role</label>
+                     
+                       <select class="custom-select" id="adduserrole">
+                            <option value=""> select </option>
+                         	<option value="Admin">Admin</option>
+                         	<option value="User">User</option>
+                        </select>
+         
+                       <!--  <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" id="customCheckbox1" >
+                          <label for="customCheckbox1" class="custom-control-label">Admin</label>
+                          
+                        </div>
+                       <div class="custom-control custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" id="customCheckbox2">
+                          <label for="customCheckbox2" class="custom-control-label">User</label>
+                        </div> -->
+                      </div>
+                <div class="form-group">
+                    <label for="address" >Address</label>
+                    <textarea class="form-control" rows="2" placeholder="Address" id="address" ></textarea>
+                  </div>
+                  </div>
+                    <div class="col-sm-6">
+                    
+                    <div class="form-group">
+                    <label for="exampleInputEmail1" class="str">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email" >
+                  </div>
+                     <div class="form-group">
+                    <label for="username" class="str">User Name</label>
+                    <input type="text" class="form-control" id="username" placeholder="User Name" >
+                  </div>
+                  
+                       <div class="form-group">
+                    <label for="exampleInputPassword1" class="str">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" >
+                  </div>
+                      <div class="form-group">
+                        <label class="str">Designation</label>
+                        <select class="custom-select" id="designation">
+                            <option value=""> select </option>
+                         	<option th:each="designation : ${designation}"
+                            th:value="${designation.desination_name}"
+                            th:utext="${designation.desination_name}"/>
+                        </select>
+                      </div>
+                  
+                 <div class="form-group">
+                    <label for="details">Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Details" id="details" ></textarea>
+                  </div>
+                </div>
+                </div>
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="saveusers" name="saveusers">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+ <!-- View user Modal -->
+<div class="modal fade" id="viewUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-eye"> View User</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="viewuser" name="viewuser">
+              <input type="text" class="form-control" id="userid" hidden="true">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="viewfullname" class="str">Full Name</label>
+                    <input type="text" class="form-control" id="viewfullname" placeholder="Full Name" >
+                  </div>
+                 
+               <div class="form-group">
+                    <label for="viewnic" class="str">NIC</label>
+                    <input type="text" class="form-control" id="viewnic" placeholder="NIC" >
+                  </div>
+                 
+                       <div class="form-group">
+                    <label for="viewtpnumber" class="str">Telephone Number</label>
+                    <input type="text" class="form-control" id="viewtpnumber" placeholder="Telephone Number"  />
+                  </div>
+                     <div class="form-group">
+                     <label for="tpnumber" class="str">User Role</label>
+                        <div class="form-group">
+                         <select class="custom-select" id="viewuserrole">
+                            <option value=""> select </option>
+                         	<option value="Admin">Admin</option>
+                         	<option value="User">User</option>
+                        </select>
+                        
+                        
+                        
+                         <!--   <div class="custom-control custom-checkbox">
+                         	<input   type="checkbox" id="adminck"  /> Admin<br />
+                         	</div>
+                         	 <div class="custom-control custom-checkbox">
+    						<input   type="checkbox" id="userck" /> User<br />
+                       </div> -->
+                       </div>
+                      
+                      </div>
+             
+                <div class="form-group">
+                    <label for="address" >Address</label>
+                    <textarea class="form-control" rows="2" placeholder="Address" id="viewaddress" ></textarea>
+                  </div>
+                  </div>
+                    <div class="col-sm-6">
+                    
+                    <div class="form-group">
+                    <label for="exampleInputEmail1" class="str">Email address</label>
+                    <input type="email" class="form-control" id="viewemail" placeholder="Enter email"  >
+                  </div>
+                     <div class="form-group">
+                    <label for="username" class="str">User Name</label>
+                    <input type="text" class="form-control" id="viewusername" placeholder="User Name"  >
+                  </div>
+                    
+                     <div class="form-group">
+                        <label class="str">Designation</label>
+                        <select class="custom-select" id="viewdesignation" >
+                            <option value=""> select </option>
+                         	<option th:each="designation : ${designation}"
+                            th:value="${designation.desination_name}"
+                            th:utext="${designation.desination_name}"/>
+                        </select>
+                      </div>
+                    
+                     <div class="form-group" id="enableuserpassword">
+                    <label for="password" class="str">Password</label>
+                    <input type="password" class="form-control" id="viewuserpassword" placeholder="Password" >
+                  </div>
+                      
+                  
+                 <div class="form-group">
+                    <label for="details">Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Details" id="viewdetails"  ></textarea>
+                  </div>
+                </div>
+                </div>
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        
+        <button id="usupdateButton" type="button" class="btn btn-success"  th:onclick="'updateUser()'">Update</button>
+        <button id="usviewButton" type="button" class="btn btn-danger" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <!--New Project Modal -->
+
+<div class="modal fade" id="addNewProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-folder"> Create Project</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="saveprojectform" name="saveprojectform">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="projectname" class="str">Project Name</label>
+                    <input type="text" class="form-control" id="projectname" placeholder="Project Name" >
+                  </div>
+                 
+                		<div class="form-group">
+                        <label class="str">Status</label>
+                        <select class="custom-select" id="projectstatus">
+                            <option value=""> select </option>
+                         	<option th:each="status : ${projectstatus}"
+                            th:value="${status.status_name}"
+                            th:utext="${status.status_name}"/>
+                        </select>
+                      </div>
+                 
+              
+                  </div>
+                    <div class="col-sm-6">
+                     <div class="form-group">
+                    <label for="projectkey" class="str">Project Key</label>
+                    <input type="text" class="form-control" id="projectkey" placeholder="Project Key" >
+                  </div>
+                    	<div class="form-group">
+                        <label class="str">Type of Development</label>
+                        <select class="custom-select" id="projectlifecycle">
+                            <option value=""> select </option>
+                         	<option th:each="lifecycle : ${projectlifecycle}"
+                            th:value="${lifecycle.lifecycle_name}"
+                            th:utext="${lifecycle.lifecycle_name}"/>
+                        </select>
+                      </div>
+                
+                </div>
+                </div>
+          
+                <div class="row">
+                 <div class="col-sm-12">
+                 <label >Project Duration</label>
+                 </div>
+                 <div class="col-sm-6">
+                  <label for="projectstartdate" class="str">From</label>
+                    <input type="text" class="form-control" id="projectstartdate" placeholder="DD/MM/YYYY" data-provide="datepicker">
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="projectenddate" class="str">To</label>
+                    <input type="text" class="form-control" id="projectenddate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+                 </div>
+                </br>
+                 <div class="row">
+                
+                <div class="col-sm-12 demo-example">
+                  <label for="projectmenager" class="str">Project Manager</label>
+                   <select id="projectmenager"  name="projectmenager" multiple>
+                         
+  							 <option th:each="pm : ${projectmanagers}" 
+  							  th:value="${pm.id}"
+                            th:utext="${pm.user_detail.full_name}"/>
+   
+                         
+                        </select>
+                 </div>
+           
+                 
+                  <div class="col-sm-12 demo-example">
+                   <label for="projectlead" class="str">Team Lead</label>
+ 					 <select id="projectlead" name="projectlead" multiple>
+                          <option th:each="lead : ${teamlead}"
+                            th:value="${lead.id}"
+                            th:utext="${lead.user_detail.full_name}"/>
+                        </select>
+                 </div> 
+                 
+                 
+                  <div class="col-sm-12">
+                   <label for="teammenbr" class="str">Project Members</label>
+                    <select  id="teammenbr" name="teammenbr" multiple>
+                          <option th:each="members : ${teammembers}"
+                            th:value="${members.id}"
+                            th:utext="${members.user_detail.full_name}"/>
+                        </select>
+                 </div>
+            
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                    <label for="details">Project Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Project Details" id="projectdetails"  ></textarea>
+                  </div>
+                 </div>
+                 
+                 </div>
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeproject">Close</button>
+        <button type="button" class="btn btn-primary" id="saveproject" name="saveproject">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+   <!-- viewProjectModal -->
+  
+  <div class="modal fade" id="viewProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-eye"> View Project</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="saveprojectform" name="saveprojectform">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="projectname" >Project Name</label>
+                    <input type="text" class="form-control" id="viewprojectname" placeholder="Project Name" readonly >
+                  </div>
+                 
+                		<div class="form-group">
+                        <label >Status</label>
+                        <select class="custom-select" id="viewprojectstatus" readonly>
+                            <option value=""> select </option>
+                         	<option th:each="status : ${projectstatus}"
+                            th:value="${status.status_name}"
+                            th:utext="${status.status_name}"/>
+                        </select>
+                      </div>
+                 
+              
+                  </div>
+                    <div class="col-sm-6">
+                     <div class="form-group">
+                    <label for="projectkey" >Project Key</label>
+                    <input type="text" class="form-control" id="viewprojectkey" placeholder="Project Key" readonly >
+                  </div>
+                    	<div class="form-group">
+                        <label >Type of Development</label>
+                        <select class="custom-select" id="viewprojectlifecycle" readonly>
+                            <option value=""> select </option>
+                         	<option th:each="lifecycle : ${projectlifecycle}"
+                            th:value="${lifecycle.lifecycle_name}"
+                            th:utext="${lifecycle.lifecycle_name}"/>
+                        </select>
+                      </div>
+                
+                </div>
+                </div>
+          
+                <div class="row">
+                 <div class="col-sm-12">
+                 <label >Project Duration</label>
+                 </div>
+                 <div class="col-sm-6">
+                  <label for="projectstartdate" >From</label>
+                    <input type="text" class="form-control" id="viewprojectstartdate" placeholder="DD/MM/YYYY"  readonly>
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="projectenddate" >To</label>
+                    <input type="text" class="form-control" id="viewprojectenddate" placeholder="DD/MM/YYYY"  readonly>
+                 </div>
+                 </div>
+                </br>
+                 <div class="row">
+                
+                <div class="col-sm-12 demo-example">
+                  <label for="projectmenager" >Project Manager</label>
+ 				<input type="text" class="form-control" id="viewprojectmenager" placeholder="Project Manager" readonly >
+                   
+                 </div>
+           
+                 
+                  <div class="col-sm-12 demo-example">
+                   <label for="projectlead" >Team Lead</label>
+  				<input type="text" class="form-control" id="viewprojectlead" placeholder="Team Leads" readonly>
+ 					
+                 </div> 
+                 
+                 
+                  <div class="col-sm-12">
+                   <label for="teammenbr" >Project Members</label>
+  				<input type="text" class="form-control" id="viewteammenbr" placeholder="Team Members" readonly >
+                   
+                 </div>
+         
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                    <label for="details">Project Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Project Details" id="viewprojectdetails" readonly ></textarea>
+                  </div>
+                 </div>
+                 
+                 </div>
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeproject">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+  <!--Edit Project Modal -->
+
+<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-edit"> Edit Project</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="updateprojectform" name="updateprojectform">
+         <input type="text" class="form-control" id="projectid" hidden="true">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="projectname" class="str">Project Name</label>
+                    <input type="text" class="form-control" id="editprojectname" placeholder="Project Name" >
+                  </div>
+                 
+                		<div class="form-group">
+                        <label class="str">Status</label>
+                        <select class="custom-select" id="editprojectstatus">
+                            <option value=""> select </option>
+                         	<option th:each="status : ${projectstatus}"
+                            th:value="${status.status_name}"
+                            th:utext="${status.status_name}"/>
+                        </select>
+                      </div>
+                 
+              
+                  </div>
+                    <div class="col-sm-6">
+                     <div class="form-group">
+                    <label for="projectkey" class="str">Project Key</label>
+                    <input type="text" class="form-control" id="editprojectkey" placeholder="Project Key" >
+                  </div>
+                    	<div class="form-group">
+                        <label class="str">Type of Development</label>
+                        <select class="custom-select" id="editprojectlifecycle">
+                            <option value=""> select </option>
+                         	<option th:each="lifecycle : ${projectlifecycle}"
+                            th:value="${lifecycle.lifecycle_name}"
+                            th:utext="${lifecycle.lifecycle_name}"/>
+                        </select>
+                      </div>
+                
+                </div>
+                </div>
+          
+                <div class="row">
+                 <div class="col-sm-12">
+                 <label >Project Duration</label>
+                 </div>
+                 <div class="col-sm-6">
+                  <label for="projectstartdate" class="str">From</label>
+                    <input type="text" class="form-control" id="editprojectstartdate" placeholder="DD/MM/YYYY" data-provide="datepicker">
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="projectenddate" class="str">To</label>
+                    <input type="text" class="form-control" id="editprojectenddate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+                 </div>
+                </br>
+                 <div class="row">
+                
+                <div class="col-sm-12 demo-example">
+                  <label for="projectmenager" class="str">Project Manager</label>
+                   <select id="editprojectmenager"  name="projectmenager" multiple>
+                         
+  							 <option th:each="pm : ${projectmanagers}" 
+  							  th:value="${pm.id}"
+                            th:utext="${pm.user_detail.full_name}"/>
+   
+                         
+                        </select>
+                 </div>
+                  <div class="col-sm-12 demo-example">
+                   <label for="projectlead" class="str">Team Lead</label>
+ 					 <select id="editprojectlead" name="projectlead" multiple>
+                          <option th:each="lead : ${teamlead}"
+                            th:value="${lead.id}"
+                            th:utext="${lead.user_detail.full_name}"/>
+                        </select>
+                 </div> 
+                 
+                 
+                  <div class="col-sm-12">
+                   <label for="teammenbr" class="str">Project Members</label>
+                    <select  id="editteammenbr" name="teammenbr" multiple>
+                          <option th:each="members : ${teammembers}"
+                            th:value="${members.id}"
+                            th:utext="${members.user_detail.full_name}"/>
+                        </select>
+                 </div>
+     
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                    <label for="details">Project Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Project Details" id="editprojectdetails"  ></textarea>
+                  </div>
+                 </div>
+                 
+                 </div>
+           </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeproject">Close</button>
+        <button type="button" class="btn btn-primary" id="editproject" name="editproject" th:onclick="'updateProject()'">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+  
+   <!--Add new event Modal -->
+
+<div class="modal fade" id="addNewEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-calendar"> Add Event</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="addnewevent" name="addnewevent">
+                <div class="card-body">
+                 <div class="row">
+                 <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="eventname" class="str">Event Name</label>
+                    <input type="text" class="form-control" id="eventname" placeholder="Event Name" >
+                  </div>
+             
+                 </div>
+           </div>
+                </div>
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeevent">Close</button>
+        <button type="button" class="btn btn-primary" id="addEvent" name="addEvent" th:onclick="'addEvent()'">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <!--New Meeting Modal -->
+
+<div class="modal fade" id="addNewMeeting" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-calendar"> Create Meeting</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="savemeetingform" name="savemeetingform">
+                 <input type="text" class="form-control" id="eventtypeid" hidden="true">
+                <div class="card-body">
+                
+                <div class="row">
+                   <div class="col-sm-12">
+                   <label for="meetingvenue" class="str">Venue</label>
+                    <select id="meetingvenue" class="form-control">
+    					<option value="At Meeting Room(G1)">At Meeting Room(G1)</option>
+    					<option value="At Meeting Room(G2)">At Meeting Room(G2)</option>
+    					<option value="At Interview Room">At Interview Room</option>
+    					<option value="At Client Site">At Client Site</option>
+    					<option value="Online">Online</option>
+    					<option value="Other">Other</option>
+					</select>
+              
+                 </div>
+                  </br>
+             
+                 <div class="col-sm-12">
+                 <label >Meeting Duration</label>
+                 </div>
+                 <div class="col-sm-6">
+                  <label for="meetingstartdate" class="str">Start Date</label>
+                    <input type="text" class="form-control" id="meetingstartdate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="meetingstarttime" class="str" >Start Time</label>
+                    <input type="time" class="form-control" id="meetingstarttime" >
+                 </div>
+              
+                <div class="col-sm-6">
+                  <label for="meetingenddate" class="str">End Date</label>
+                    <input type="text" class="form-control" id="meetingenddate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="meetingendtime" class="str">End Time</label>
+                    <input type="time" class="form-control" id="meetingendtime" >
+                 </div>
+              
+              
+              
+                 </div>
+                </br>
+                 <div class="row">
+                
+                <div class="col-sm-12 demo-example">
+                  <label for="meetingparticipants" class="str">Participants</label>
+                   <select id="meetingparticipants"  name="meetingparticipants" multiple>    
+  							  <option th:each="pm : ${teammembers}" 
+  							  th:value="${pm.id}"
+                            th:utext="${pm.user_detail.full_name}"/> 
+
+                        </select>
+                 </div>
+     
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                    <label for="meetingdetails">Meeting Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Meeting Details" id="meetingdetails"  ></textarea>
+                  </div>
+                 </div>
+                 
+                 </div>
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closemeeting">Close</button>
+        <button type="button" class="btn btn-primary" id="savemeeting" name="savemeeting">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+   <!--Edit Meeting Modal -->
+
+<div class="modal fade" id="editMeetingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-calendar"> Edit Meeting</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="editmeetingform" name="editmeetingform">
+                 <input type="text" class="form-control" id="eventid" hidden="true">
+                <div class="card-body">
+                
+                <div class="row">
+                   <div class="col-sm-12">
+                   <label for="editmeetingvenue" class="str">Venue</label>
+                    <select id="editmeetingvenue" class="form-control">
+    					<option value="At Meeting Room(G1)">At Meeting Room(G1)</option>
+    					<option value="At Meeting Room(G2)">At Meeting Room(G2)</option>
+    					<option value="At Interview Room">At Interview Room</option>
+    					<option value="At Client Site">At Client Site</option>
+    					<option value="Online">Online</option>
+    					<option value="Other">Other</option>
+					</select>
+              
+                 </div>
+                  </br>
+             
+                 <div class="col-sm-12">
+                 <label >Meeting Duration</label>
+                 </div>
+                 <div class="col-sm-6">
+                  <label for="editmeetingstartdate" class="str">Start Date</label>
+                    <input type="text" class="form-control" id="editmeetingstartdate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="editmeetingstarttime" class="str" >Start Time</label>
+                    <input type="time" class="form-control" id="editmeetingstarttime" >
+                 </div>
+              
+                <div class="col-sm-6">
+                  <label for="editmeetingenddate" class="str">End Date</label>
+                    <input type="text" class="form-control" id="editmeetingenddate" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                  
+                 </div>
+                  <div class="col-sm-6">
+                   <label for="editmeetingendtime" class="str">End Time</label>
+                    <input type="time" class="form-control" id="editmeetingendtime" >
+                 </div>
+              
+              
+              
+                 </div>
+                </br>
+                 <div class="row">
+                
+            <!--     <div class="col-sm-12 demo-example">
+                  <label for="meetingparticipants" class="str">Participants</label>
+                   <select id="meetingparticipants"  name="meetingparticipants" multiple>    
+  							  <option th:each="pm : ${teammembers}" 
+  							  th:value="${pm.id}"
+                            th:utext="${pm.user_detail.full_name}"/> 
+
+                        </select>
+                 </div> -->
+     
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                    <label for="editmeetingdetails">Meeting Details</label>
+                    <textarea class="form-control" rows="2" placeholder="Meeting Details" id="editmeetingdetails"  ></textarea>
+                  </div>
+                 </div>
+                 
+                 </div>
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeevent">Close</button>
+        <button type="button" class="btn btn-primary" id="updatemeeting" name="updatemeeting" th:onclick="'updateEvent()'">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+ <!--  Add new CR -->
+<div class="modal fade" id="addNewCR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-folder"> Create Change Request(CR)</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form    role="form" method="POST" enctype="multipart/form-data" id="fileUploadForm"  >
+                <div class="card-body">
+                
+                   <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Project Name</label>
+   						<select class="custom-select" id="projectnamecr">
+                            
+                         	<option th:each="project : ${project}"
+                            th:value="${project.projectname}"
+                            th:utext="${project.projectname}" />
+                            
+                        </select>   
+                        
+                      
+                                      
+                 </div>
+                  <div class="col-sm-6">
+                    <label for="tasktypecr" class="str">Task Type</label>
+                    <input type="text" class="form-control" id="tasktypecr" placeholder="Task Type" value="Change Request" disabled="disabled">
+                 </div>
+                 </div>
+                <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Task Severity</label>
+   						<select class="custom-select" id="severitycr">
+                            
+                         	<option th:each="severity : ${severity}"
+                            th:value="${severity.severity_id}"
+                            th:utext="${severity.severity_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Task Priority</label>
+   						<select class="custom-select" id="prioritycr">
+                            
+                         	<option th:each="priority : ${priority}"
+                            th:value="${priority.priority_id}"
+                            th:utext="${priority.priority_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Reporter</label>
+   						<select class="custom-select" id="reportercr">
+						<option value=""> select </option>               
+						<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Assignee</label>
+   						<select class="custom-select" id="assigneecr">
+   						<option value=""> select </option>
+                         	<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                  <hr>
+                 
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Due Date</label>
+  						<input type="text" class="form-control" id="duedatecr" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+                <!--   <div class="col-sm-6">
+                        <label >Attachment</label>
+   					 <label for="fileCR">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fileCR">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                      </div>
+                 
+                    </div>               
+                 </div> -->
+                 </div>
+                 
+           
+                 
+                <div class="col-sm-12">
+                        <label >Description</label>
+   					       <!-- tools box -->
+             <div class="card-body pad">
+              <div class="mb-3">
+                <textarea class="textarea" placeholder="Place some text here"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+              </div>
+             
+            </div>
+              <!-- /. tools -->          
+                 </div>
+     
+                
+                </div>
+                
+             </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closecr">Close</button>
+        <button type="button" class="btn btn-primary" id="savenewcr" name="savenewcr">Save changes</button>
+        
+      </div>
+    </div>
+  </div>
+</div>  
+  
+   <!--Edit Task Modal -->
+
+<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-tasks"> Edit Change Request</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="edittaskform" name="edittaskform">
+                 <input type="text" class="form-control" id="edittaskid" hidden="true">
+                <div class="card-body">
+                
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Project Name</label>
+   						<select class="custom-select" id="editprojectnamecr">
+                            
+                         	<option th:each="project : ${project}"
+                            th:value="${project.projectname}"
+                            th:utext="${project.projectname}" />
+                            
+                        </select>   
+                        
+                      
+                                      
+                 </div>
+                  <div class="col-sm-6">
+                    <label for="edittasktypecr" class="str">Task Type</label>
+                    <input type="text" class="form-control" id="edittasktypecr" placeholder="Task Type" value="Change Request" disabled="disabled">
+                 </div>
+                 </div>
+             <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Task Severity</label>
+   						<select class="custom-select" id="editseveritycr">
+                            
+                         	<option th:each="severity : ${severity}"
+                            th:value="${severity.severity_id}"
+                            th:utext="${severity.severity_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Task Priority</label>
+   						<select class="custom-select" id="editprioritycr">
+                            
+                         	<option th:each="priority : ${priority}"
+                            th:value="${priority.priority_id}"
+                            th:utext="${priority.priority_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                 <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Reporter</label>
+   						<select class="custom-select" id="editreportercr">
+						<option value=""> select </option>               
+						<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Assignee</label>
+   						<select class="custom-select" id="editassigneecr">
+   						<option value=""> select </option>
+                         	<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                <hr>
+                 
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Due Date</label>
+  						<input type="text" class="form-control" id="editduedatecr" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Status</label>
+   						<select class="custom-select" id="editstatuscr">
+   						<option value=""> select </option>
+                         	<option th:each="status : ${status}"
+                            th:value="${status.status_id}"
+                            th:utext="${status.status_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                 
+           
+                 
+                <div class="col-sm-12">
+                        <label >Description</label>
+   					       <!-- tools box -->
+             <div class="card-body pad">
+              <div class="mb-3">
+                <textarea class="textarea" placeholder="Place some text here" id="editEditor"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+              </div>
+             
+            </div>
+              <!-- /. tools -->          
+                 </div>
+                
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeeditcr">Close</button>
+        <button type="button" class="btn btn-primary" id="updatemeeting" name="updatemeeting" th:onclick="'updateTask()'">Update</button>
+      </div>
+    </div>
+  </div>
+</div> 
+  
+  
+  <!--  Add new Defect -->
+<div class="modal fade" id="addNewDefect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-folder"> Defect/Bug</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form    role="form" method="POST" enctype="multipart/form-data" id="fileUploadForm"  >
+                <div class="card-body">
+                
+                   <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Project Name</label>
+   						<select class="custom-select" id="projectnamedefect">
+                            
+                         	<option th:each="project : ${project}"
+                            th:value="${project.projectname}"
+                            th:utext="${project.projectname}" />
+                            
+                        </select>   
+                        
+                      
+                                      
+                 </div>
+                  <div class="col-sm-6">
+                    <label for="tasktypedefect" class="str">Task Type</label>
+                    <input type="text" class="form-control" id="tasktypedefect" placeholder="Task Type" value="Defect/Bug" disabled="disabled">
+                 </div>
+                 </div>
+                <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Task Severity</label>
+   						<select class="custom-select" id="severitydefect">
+                            
+                         	<option th:each="severity : ${severity}"
+                            th:value="${severity.severity_id}"
+                            th:utext="${severity.severity_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Task Priority</label>
+   						<select class="custom-select" id="prioritydefect">
+                            
+                         	<option th:each="priority : ${priority}"
+                            th:value="${priority.priority_id}"
+                            th:utext="${priority.priority_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Reporter</label>
+   						<select class="custom-select" id="reporterdefect">
+						<option value=""> select </option>               
+						<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Assignee</label>
+   						<select class="custom-select" id="assigneedefect">
+   						<option value=""> select </option>
+                         	<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                  <hr>
+                 
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Due Date</label>
+  						<input type="text" class="form-control" id="duedatedefect" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+               
+                 </div>
+                 
+           
+                 
+                <div class="col-sm-12">
+                        <label >Description</label>
+   					       <!-- tools box -->
+             <div class="card-body pad">
+              <div class="mb-3">
+                <textarea class="textareadefect" placeholder="Place some text here"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+              </div>
+             
+            </div>
+              <!-- /. tools -->          
+                 </div>
+     
+                
+                </div>
+                
+             </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closedefect">Close</button>
+        <button type="button" class="btn btn-primary" id="savenewdefect" name="savenewdefect">Save changes</button>
+        
+      </div>
+    </div>
+  </div>
+</div>  
+  
+  
+   <!--Edit Defect Modal -->
+
+<div class="modal fade" id="editDefectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fas fa-tasks"> Edit Defect/Bug</i></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form role="form" id="editdefectform" name="editdefectform">
+                 <input type="text" class="form-control" id="editdefectid" hidden="true">
+                <div class="card-body">
+                
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Project Name</label>
+   						<select class="custom-select" id="editprojectnamedefect">
+                            
+                         	<option th:each="project : ${project}"
+                            th:value="${project.projectname}"
+                            th:utext="${project.projectname}" />
+                            
+                        </select>   
+                        
+                      
+                                      
+                 </div>
+                  <div class="col-sm-6">
+                    <label for="edittasktypecr" class="str">Task Type</label>
+                    <input type="text" class="form-control" id="edittasktypedefect" placeholder="Task Type" value="Defect/Bug" disabled="disabled">
+                 </div>
+                 </div>
+             <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Task Severity</label>
+   						<select class="custom-select" id="editseveritydefect">
+                            
+                         	<option th:each="severity : ${severity}"
+                            th:value="${severity.severity_id}"
+                            th:utext="${severity.severity_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Task Priority</label>
+   						<select class="custom-select" id="editprioritydefect">
+                            
+                         	<option th:each="priority : ${priority}"
+                            th:value="${priority.priority_id}"
+                            th:utext="${priority.priority_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                 <hr>
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Reporter</label>
+   						<select class="custom-select" id="editreporterdefect">
+						<option value=""> select </option>               
+						<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-6">
+                        <label class="str">Assignee</label>
+   						<select class="custom-select" id="editassigneedefect">
+   						<option value=""> select </option>
+                         	<option th:each="users : ${users}"
+                            th:value="${users.id}"
+                            th:utext="${users.user_detail.full_name}"/>
+                        </select>                  
+                 </div>
+                 </div>
+                <hr>
+                 
+                  <div class="row">
+               
+                 <div class="col-sm-6">
+                        <label class="str">Due Date</label>
+  						<input type="text" class="form-control" id="editduedatedefect" placeholder="DD/MM/YYYY" data-provide="datepicker" >
+                 </div>
+                    <div class="col-sm-6">
+                        <label class="str">Status</label>
+   						<select class="custom-select" id="editstatusdefect">
+   						<option value=""> select </option>
+                         	<option th:each="status : ${status}"
+                            th:value="${status.status_id}"
+                            th:utext="${status.status_name}"/>
+                        </select>                  
+                 </div>
+               
+                 </div>
+                 
+           
+                 
+                <div class="col-sm-12">
+                        <label >Description</label>
+   					       <!-- tools box -->
+             <div class="card-body pad">
+              <div class="mb-3">
+                <textarea class="textarea" placeholder="Place some text here" id="editdefectEditor"
+                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+              </div>
+             
+            </div>
+              <!-- /. tools -->          
+                 </div>
+                
+                
+                
+                </div>
+                
+              </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeeditdefect">Close</button>
+        <button type="button" class="btn btn-primary" id="updatedefect" name="updatedefect" th:onclick="'updateDefectTask()'">Update</button>
+      </div>
+    </div>
+  </div>
+</div> 
+  
+  
+  
+  
+  
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}"></script>
+
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+
+
+<!-- DataTables -->
+<script th:src="@{/plugins/datatables/jquery.dataTables.js}"></script>
+<script th:src="@{/plugins/datatables-bs4/js/dataTables.bootstrap4.js}"></script>
+
+ <!-- AdminLTE App -->
+ <!-- Toastr -->
+<script th:src="@{/plugins/toastr/toastr.min.js}"></script>
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/dist/js/demo.js}"></script>
+<!-- Custom Users js file -->
+<script th:src="@{/dist/js/users.js}"></script>
+<script th:src="@{/dist/js/project.js}"></script>
+<script th:src="@{/dist/js/meeting.js}"></script>
+<script th:src="@{/dist/js/task.js}"></script>
+<script th:src="@{/dist/js/report.js}"></script>
+
+<!-- multiselect js -->
+  <script th:src="@{/plugins/multiselect/jquery.multi-select.js}"></script>
+<!-- datepicker js -->
+  <script th:src="@{/plugins/datepicker/bootstrap-datepicker.min.js}"></script>
+<!-- fullCalendar 2.2.5 -->
+<script th:src="@{/plugins/moment/moment.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar/main.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar-daygrid/main.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar-timegrid/main.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar-interaction/main.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar-bootstrap/main.min.js}"></script>
+
+<!-- Summernote -->
+<script th:src="@{/plugins/summernote/summernote-bs4.min.js}"></script>
+
+<!-- bs-custom-file-input -->
+<script th:src="@{/plugins/bs-custom-file-input/bs-custom-file-input.min.js}"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+
+
+
+</body>
+</html>

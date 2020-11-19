@@ -1,0 +1,808 @@
+ <!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+ 
+ <!-- /.Edit Meetings -->
+  <div th:fragment="EditMeetings">
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Edit Events 
+             
+                       
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Edit Events</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+    <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Event Details</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Event Type</th>
+                  <th>Venue</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Event Description</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="eventinfo : ${eventinfo}">
+   
+        			<tr >
+                  <td th:text="${eventinfo.mtEventType.event_name}"></td>
+                  <td th:text="${eventinfo.venue}"></td>
+                  <td th:text="${eventinfo.start_date}"></td>
+                  <td th:text="${eventinfo.end_date}"></td>
+                  <td th:text="${eventinfo.meetingdetail}"></td>
+                  <td class="project-actions text-center">  
+                 
+                          <button class="btn btn-info btn-sm" id="eventEdit" th:onclick="'eventEdit('+${eventinfo.id}+ ')'" >
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Edit
+                          </button>
+                          <button class="btn btn-danger btn-sm" id="eventDelete" th:onclick="'eventDelete('+${eventinfo.id}+ ')'">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </button></td>
+                </tr>
+   
+</th:block>
+               
+               
+               
+               </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+
+
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+  
+ 
+ 
+<!-- /.PROJECT CONTENT -->
+
+ <div th:fragment="Meetings">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Meetings |
+            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addNewEventModal">
+                      <i class="fas fa-plus"></i> Add Event 
+                    </button>
+                    
+                     <a href="/TeamCollaboration/editMeetings" ><button type="button" class="btn btn-sm btn-info" >
+                      <i class="fas fa-edit"></i> Manage Event 
+                    </button></a>
+                
+            </h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Meetings</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Meetings</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="sticky-top mb-3">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title"> Events</h4>
+                </div>
+                <div class="card-body">
+                  <!-- the events -->
+                  <div id="external-events">
+                    <th:block th:each="e : ${events}">
+                 
+               
+                    <div class="external-event bg-info" th:onclick="'createMeeting('+${e.event_id}+ ')'" >
+                    
+                   <!--   <div class="btn-group" >
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-hover dropdown-icon " data-toggle="dropdown" align="right">
+                      <span class="sr-only ">Toggle Dropdown</span>
+                      <div class="dropdown-menu" role="menu">
+                        
+                        <a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Edit</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-trash"></i>  Delete</a>
+                      </div>
+                    </button>
+                  </div> -->
+            
+                    <span th:text="${e.event_name}" ></span>
+                  </div>
+              
+                  
+                  
+                    
+            
+           
+           
+           
+           
+           
+                  </th:block>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+           
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card card-primary">
+              <div class="card-body p-0">
+                <!-- THE CALENDAR -->
+                <div id="calendar"></div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+         
+         
+         
+         
+         
+ 
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+  
+
+<!-- /.PROJECT CONTENT -->
+
+
+ <div th:fragment="Projects">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Projects |
+            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addNewProject">
+                      <i class="fas fa-plus"></i> Create Project 
+                    </button>
+            </h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Projects</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Projects</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped projects">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Project Name
+                      </th>
+                      <th style="width: 20%">
+                          Development Methodology
+                      </th>
+                      <th>
+                          Project Progress
+                      </th>
+                      <th style="width: 18%" class="text-center">
+                          Status
+                      </th>
+                      <th style="width: 20%">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody>
+              <th:block th:each="p : ${project}">
+                  <tr>
+                      <td  th:text="${p.id}">
+                       
+                      </td>
+                      <td>
+                             <a th:text="${p.projectname}"> </a> (<a th:text="${p.projectkey}"></a>)
+                          
+                          <br/>
+                          <small>
+                              Created <span th:text="${#dates.format(p.start_date, 'dd-MMM-yyyy')}"></span>
+                          </small>
+                      </td>
+                      <td>
+                          <ul class="list-inline">
+							  <a th:text="${p.lifecycle}">
+                          </a>
+                          </ul>
+                      </td>
+                      <td class="project_progress">
+                          <div class="progress progress-sm">
+                              <div  class="progress-bar bg-green" role="progressbar" aria-volumenow="30" aria-volumemin="0" aria-volumemax="100" th:style="'width:'+ ${p.projectprogress}+'%;'">
+                              </div>
+                              
+                          </div>
+                          <small>
+                             <span th:text="${p.projectprogress}"></span>% Complete
+                          </small>
+                      </td>
+                      <td class="project-state">
+                          <span class="badge badge-info" th:text="${p.staus}"></span>
+                      </td>
+                      <td class="project-actions text-right">
+                          <button class="btn btn-primary btn-sm" id="projectView" th:onclick="'projectView('+${p.id}+ ')'">
+                              <i class="fas fa-folder">
+                              </i>
+                              View
+                          </button>
+                          <button class="btn btn-info btn-sm" id="projectEdit" th:onclick="'projectEdit('+${p.id}+ ')'">
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Edit
+                          </button>
+                          <button class="btn btn-danger btn-sm" id="projectDelete" th:onclick="'projectDelete('+${p.id}+ ')'">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </button>
+                      </td>
+                 </tr>
+                 
+             </th:block>
+                 
+                 
+              </tbody>
+          </table>
+ 
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+  
+  <!-- /.USER CONTENT -->
+  
+  <div th:fragment="Users">
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Users | 
+             <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addUserModal">
+                      <i class="fas fa-plus"></i> Add New
+                    </button>
+                       
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Users</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+     <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">User Details</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="userTable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Designation</th>
+                  <th>E mail</th>
+                  <th>Address</th>
+                  <th>Contact No</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="userlist : ${userlist}">
+   
+        <tr >
+                  <td th:text="${userlist.user_detail.full_name}"></td>
+                  <td th:text="${userlist.user_detail.designation}"></td>
+                  <td th:text="${userlist.user_detail.email}"></td>
+                  <td th:text="${userlist.user_detail.address}"></td>
+                  <td th:text="${userlist.user_detail.telephone}"></td>
+                  <td class="project-actions text-center">  
+                  <button class="btn btn-primary btn-sm" id="userView" th:onclick="'userView('+${userlist.id}+ ')'">
+                              <i class="fas fa-folder">
+                              </i>
+                              View
+                          </button>
+                          <button class="btn btn-info btn-sm" id="userEdit" th:onclick="'userEdit('+${userlist.id}+ ')'" >
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Edit
+                          </button>
+                          <button class="btn btn-danger btn-sm" id="userDelete" th:onclick="'userDelete('+${userlist.id}+ ')'">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </button></td>
+                </tr>
+   
+</th:block>
+                
+                
+ </tbody>
+            
+              </table>
+            </div>
+</div>
+
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+  
+  
+  <!-- /.Change Request CONTENT -->
+
+
+ <div th:fragment="ChangeRequest">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Change Request(CR) |
+            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addNewCR">
+                      <i class="fas fa-plus"></i> Add New 
+                    </button>
+            </h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Change Request</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Change Request(CR)</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+     
+      <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Project</th>
+                  <th>Priority</th>
+                  <th>Severity</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="task : ${task}">
+   
+        			<tr >
+                  <td th:text="${task.id}"></td>
+                  <td th:text="${task.project}"></td>
+                  <td th:text="${task.task_prority.priority_name}"></td>
+                  <td th:text="${task.task_severity.severity_name}"></td>
+                  <td th:text="${task.task_status.status_name}"></td>
+                  <td th:text="${#dates.format(task.due_date, 'yyyy-MM-dd')}"></td>
+                  <td class="project-actions text-center">  
+                 
+                          <button class="btn btn-info btn-sm" id="eventEdit" th:onclick="'taskEdit('+${task.id}+ ')'" >
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Edit
+                          </button>
+                          <button class="btn btn-danger btn-sm" id="eventDelete" th:onclick="'taskDelete('+${task.id}+ ')'">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </button></td>
+                </tr>
+   
+</th:block>
+               
+               
+               
+               </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+     
+     
+     
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+   
+  
+  
+   <!-- /.DEFECT CONTENT -->
+
+
+ <div th:fragment="Defect">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Defect |
+            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#addNewDefect">
+                      <i class="fas fa-plus"></i> Add New 
+                    </button>
+            </h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Defects</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Defects/Bugs</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+     
+      <!-- /.card-header -->
+            <div class="card-body">
+         <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Project</th>
+                  <th>Priority</th>
+                  <th>Severity</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="task : ${task}">
+   
+        			<tr >
+                  <td th:text="${task.id}"></td>
+                  <td th:text="${task.project}"></td>
+                  <td th:text="${task.task_prority.priority_name}"></td>
+                  <td th:text="${task.task_severity.severity_name}"></td>
+                  <td th:text="${task.task_status.status_name}"></td>
+                  <td th:text="${#dates.format(task.due_date, 'yyyy-MM-dd')}" ></td>
+                  <td class="project-actions text-center">  
+                 
+                          <button class="btn btn-info btn-sm" id="eventEdit" th:onclick="'defectEdit('+${task.id}+ ')'" >
+                              <i class="fas fa-pencil-alt">
+                              </i>
+                              Edit
+                          </button>
+                          <button class="btn btn-danger btn-sm" id="eventDelete" th:onclick="'defectDelete('+${task.id}+ ')'">
+                              <i class="fas fa-trash">
+                              </i>
+                              Delete
+                          </button></td>
+                </tr>
+   
+</th:block>
+               
+               
+               
+               </tbody>
+              </table> 
+            </div>
+            <!-- /.card-body -->
+     
+     
+     
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+   
+  
+  <div th:fragment="reports">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Reports 
+        
+            </h1>
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="/TeamCollaboration/home">Home</a></li>
+              <li class="breadcrumb-item active">Reports</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Reports</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+      <div class="card-body">
+       <div class="row">
+               
+                 <div class="col-sm-2">
+                        <label class="str">Project</label>
+   						<select class="custom-select" id="searchproject">
+                         		<option th:each="project : ${project}"
+                            th:value="${project.projectname}"
+                            th:utext="${project.projectname}" />
+                        </select>   
+                 </div>
+                    <div class="col-sm-2">
+                        <label class="str">Priority</label>
+   						<select class="custom-select" id="searchpriority">
+                         	<option th:each="priority : ${priority}"
+                            th:value="${priority.priority_id}"
+                            th:utext="${priority.priority_name}"/>
+                        </select>                  
+                 </div>
+                 <div class="col-sm-2">
+                        <label class="str">Severity</label>
+   						<select class="custom-select" id="searchseverity">
+                         	<option th:each="severity : ${severity}"
+                            th:value="${severity.severity_id}"
+                            th:utext="${severity.severity_name}"/>
+                        </select>                  
+                 </div>
+                  <div class="col-sm-2">
+                        <label class="str">Status</label>
+   						<select class="custom-select" id="searchstatus">
+                         	<option th:each="status : ${status}"
+                            th:value="${status.status_id}"
+                            th:utext="${status.status_name}"/>
+                        </select>                  
+                 </div>
+                    <div class="col-sm-2">
+                        <label class="str">Task Type</label>
+   						<select class="custom-select" id="searchtasktype">
+   					
+                         	<option value="1">Change Request</option>
+    						<option value="2">Bug/Defects</option>
+                        </select>                  
+                 </div>
+                    <div class="col-sm-2">
+                  <label > </label>
+                  </br>
+                   <button type="button" class="btn btn-primary" id="searchResult" name="searchResult" th:onclick="'searchResult()'">Find</button>
+         				 </div>
+                    </div>
+                 </div>
+      
+      </div>
+     
+     
+      <!-- /.card-header -->
+         <div class="card-body">
+        <div id="dvTable"></div>
+         <!-- <table id="reporttable" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Project</th>
+                  <th>Priority</th>
+                  <th>Severity</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                 
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="task : ${task}">
+   
+        			<tr >
+                  <td th:text="${task.id}"></td>
+                  <td th:text="${task.project}"></td>
+                  <td th:text="${task.task_prority.priority_name}"></td>
+                  <td th:text="${task.task_severity.severity_name}"></td>
+                  <td th:text="${task.task_status.status_name}"></td>
+                  <td th:text="${#dates.format(task.due_date, 'yyyy-MM-dd')}" ></td>
+             
+                </tr>
+   
+</th:block>
+               
+               
+               
+               </tbody>
+              </table>  -->
+              
+            </div>
+            <input type="button" class="btn btn-primary" id="btnExport" value="Export" />
+            <!-- /.card-body -->
+     
+     
+     
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  </div>
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+</body>
+</html>

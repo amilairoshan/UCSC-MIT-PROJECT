@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Team Collaboration | Log in</title>
+  <!-- Tell the browser to be responsive to screen width -->
+ <link rel="stylesheet" type="text/css" th:href="@{/dist/css/style.css}"/> 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" th:href="@{/plugins/fontawesome-free/css/all.min.css}"/>
+ <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap 
+    <link rel="stylesheet" th:href="@{/plugins/icheck-bootstrap/icheck-bootstrap.min.css}"/>
+ <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/dist/css/adminlte.min.css}"/> 
+ <!-- Google Font: Source Sans Pro-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> 
+   
+</head>
+
+<!-- /.login-box -->
+
+<body th:style="'background:url('+ @{/dist/img/BK11.jpg} +'); margin: 0;
+    padding: 0; background-size: cover;
+    background-position: center;
+    font-family: sans-serif;'"  >
+  
+    <div class="login-box">
+    <img th:src="@{/dist/img/logotm.png}" class="avatar">
+        
+            <form action="login" method="post">
+              <p class="login-box-msg">
+
+ <div th:if="${param.error} and ${session}" th:with="errorMsg2=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+     <div class="alert alert-dismissible alert-danger error">
+           <span th:text="${errorMsg2}"></span>
+     </div>
+</div> </p>
+            <p class="fas fa-user"> | Username</p>
+            <input type="text" name="username" placeholder="Enter Username" required>
+          
+            <p class="fas fa-lock"> | Password</p>
+            <input type="password"  name="password" placeholder="Enter Password" required>
+            
+            <input type="submit" name="submit" value="Login">
+			<a href="/TeamCollaboration/register"><input type="BUTTON"   name="signup" value="Sign Up"></a>    
+            
+            </form>
+       
+        
+        </div>
+
+
+
+<!-- jQuery -->
+<script th:src="@{/plugins/jquery/jquery.min.js}" ></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/dist/js/adminlte.min.js}" ></script>
+
+</body>
+</html>
