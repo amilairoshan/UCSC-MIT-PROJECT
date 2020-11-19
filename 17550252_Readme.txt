@@ -5,7 +5,7 @@ Name - V.P.A.Iroshan
 Index No - 17550252
 Project Name - Team collaboration management system
 
-GitHub Link-
+GitHub Link-https://github.com/amilairoshan/UCSC-MIT-PROJECT.git
 
 The Team collaboration management system is a java web based application.It is spring boot application and used maven as build automation tool.
 The MVC architectural design pattern has been used to design this project and Mysql used as database management system.
@@ -29,7 +29,7 @@ Application Server - Apache TOMCAT 8.0
 JDK/JRE Version - Minimum JDK 8.0
 Maven Version - Minimum Maven 4.0
 
-GitHub Link-
+GitHub Link-https://github.com/amilairoshan/UCSC-MIT-PROJECT.git
 
 How to Setup project-
 First you have to go to above github link and download it to your local pc.Then unzip the compressed project and follow below steps,
