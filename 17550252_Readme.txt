@@ -1,2 +1,43 @@
 # UCSC-MIT-PROJECT
 This repository contain final year project source code of Team collaboration management system.Index No-17550252
+
+Name - V.P.A.Iroshan
+Index No - 17550252
+Project Name - Team collaboration management system
+
+GitHub Link-
+
+The Team collaboration management system is a java web based application.It is spring boot application and used maven as build automation tool.
+The MVC architectural design pattern has been used to design this project and Mysql used as database management system.
+The project root folder named as "TeamCollaboration".Under src/main/java package you can find out the .java class files and which are packaged under several packages.
+The com.tm package contains the spring boot application class,security class and web-config class.
+The controller package has all controller classes and DTO package consists all data transfer object classes.
+Then the model package contains the all entity classes and repository package has repository classes which contains all db transactions.
+The service and util package contains all business logics.  
+Under src/main/resource package listed all dynamic and static .html files and other configuration files.
+The application.properties file contain database configuration details.
+The log4j2.Properties consists logger details of the project.
+The pom.xml contains all the external java libraries and plugins.
+
+ 
+The project prerequisites as below,
+
+Operating System - Any Operating System(JDK Support)
+Database - My SQL Server 5.5
+Web browser - Internet explorer/Fire Fox/GoogleChrome
+Application Server - Apache TOMCAT 8.0
+JDK/JRE Version - Minimum JDK 8.0
+Maven Version - Minimum Maven 4.0
+
+GitHub Link-
+
+How to Setup project-
+First you have to go to above github link and download it to your local pc.Then unzip the compressed project and follow below steps,
+
+The server machine should be configured JAVA HOME and MAVEN HOME in system variables.
+Then need to create a privileged user on MySQL server and should create database called as “teamcollaboration”.
+If you use external tomcat server, put created .war files under webapps folder and then start the tomcat server using .bat or .sh file.
+If you are not using external tomcat server you have to go inside the project folder and run the the “mvn spring-boot:run” on your CMD.
+It will run the project on embedded tomcat server.
+Application URL - "http://localhost:8080/TeamCollaboration/"
+Run the system in browser using given Application URL .
